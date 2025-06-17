@@ -1,0 +1,487 @@
+/* Dark Theme Professional Navbar with Orange Accents */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: #1a1a1a;
+  border-bottom: 1px solid #2d2d2d;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.navbar.scrolled {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  border-bottom-color: #404040;
+  background: #161616;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 64px;
+}
+
+/* Brand Section */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.company-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: #f97316;
+}
+
+.company-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+}
+
+/* Navigation Center */
+.nav-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #a3a3a3;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  transition: all 0.15s ease-in-out;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: #f97316;
+  background-color: #262626;
+}
+
+.nav-link:active {
+  background-color: #404040;
+}
+
+.nav-link.active {
+  color: #f97316;
+  background-color: #292929;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 2px;
+  background-color: #f97316;
+  border-radius: 1px;
+}
+
+/* Right Section */
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+/* User Section */
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.125rem;
+}
+
+.user-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+.user-role {
+  font-size: 0.75rem;
+  color: #a3a3a3;
+  line-height: 1;
+}
+
+/* User Menu */
+.user-menu-wrapper {
+  position: relative;
+}
+
+.user-menu-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #262626;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  padding: 0.375rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.user-menu-trigger:hover {
+  border-color: #525252;
+  background-color: #2d2d2d;
+}
+
+.user-menu-trigger:focus {
+  outline: none;
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.avatar-text {
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.chevron-icon {
+  color: #a3a3a3;
+  transition: transform 0.15s ease-in-out;
+}
+
+.chevron-icon.rotated {
+  transform: rotate(180deg);
+  color: #f97316;
+}
+
+/* User Dropdown */
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  width: 280px;
+  background: #1f1f1f;
+  border: 1px solid #404040;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  z-index: 50;
+  overflow: hidden;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-header {
+  padding: 1rem;
+  border-bottom: 1px solid #2d2d2d;
+  background-color: #262626;
+}
+
+.dropdown-user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dropdown-avatar {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dropdown-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.dropdown-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.25;
+  display: block;
+  truncate: true;
+}
+
+.dropdown-email {
+  font-size: 0.75rem;
+  color: #a3a3a3;
+  line-height: 1.25;
+  display: block;
+  truncate: true;
+}
+
+.dropdown-section {
+  padding: 0.5rem 0;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: #d4d4d4;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.dropdown-item:hover {
+  background-color: #262626;
+  color: #f97316;
+}
+
+.dropdown-item:active {
+  background-color: #2d2d2d;
+}
+
+.dropdown-item svg {
+  color: #a3a3a3;
+  flex-shrink: 0;
+  transition: color 0.15s ease-in-out;
+}
+
+.dropdown-item:hover svg {
+  color: #f97316;
+}
+
+.dropdown-item.logout-item {
+  color: #ef4444;
+}
+
+.dropdown-item.logout-item:hover {
+  background-color: #2d1b1b;
+  color: #f87171;
+}
+
+.dropdown-item.logout-item svg {
+  color: #ef4444;
+}
+
+.dropdown-item.logout-item:hover svg {
+  color: #f87171;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #2d2d2d;
+  margin: 0.5rem 0;
+}
+
+/* Login Button */
+.login-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.15s ease-in-out;
+  box-shadow: 0 2px 4px rgba(249, 115, 22, 0.2);
+}
+
+.login-btn:hover {
+  background: linear-gradient(135deg, #ea580c, #c2410c);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(249, 115, 22, 0.3);
+}
+
+.login-btn:active {
+  background: linear-gradient(135deg, #c2410c, #9a3412);
+  transform: translateY(0);
+}
+
+.login-btn svg {
+  flex-shrink: 0;
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .navbar-container {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-container {
+    padding: 0 1rem;
+    height: 56px;
+  }
+  
+  .nav-center {
+    display: none;
+  }
+  
+  .nav-brand {
+    flex: 1;
+  }
+  
+  .company-name {
+    font-size: 1rem;
+  }
+  
+  .user-info {
+    display: none;
+  }
+  
+  .user-dropdown {
+    width: 260px;
+    right: -1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-container {
+    padding: 0 0.75rem;
+  }
+  
+  .company-name {
+    display: none;
+  }
+  
+  .user-dropdown {
+    width: 240px;
+    right: -0.75rem;
+  }
+}
+
+/* Focus States for Accessibility */
+.nav-link:focus,
+.login-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+}
+
+.dropdown-item:focus {
+  outline: none;
+  background-color: #262626;
+  color: #f97316;
+}
+
+/* Scrollbar Styling for Dropdown */
+.user-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.user-dropdown::-webkit-scrollbar-track {
+  background: #2d2d2d;
+}
+
+.user-dropdown::-webkit-scrollbar-thumb {
+  background: #525252;
+  border-radius: 3px;
+}
+
+.user-dropdown::-webkit-scrollbar-thumb:hover {
+  background: #737373;
+}
+
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #f97316, #ea580c);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+  border-radius: 1px;
+}
+
+.nav-link:hover::before {
+  width: 80%;
+}
+
+
+.company-logo:hover {
+  filter: drop-shadow(0 0 8px rgba(249, 115, 22, 0.4));
+}
+
+.user-avatar:hover {
+  filter: drop-shadow(0 0 8px rgba(249, 115, 22, 0.3));
+}
+
+
+@media print {
+  .navbar {
+    display: none;
+  }
+}

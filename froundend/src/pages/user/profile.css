@@ -1,0 +1,288 @@
+/* src/pages/profile.css (or src/components/profile.css) */
+
+.profile-page {
+  padding: 80px 2rem 2rem; /* Adjust padding-top to account for fixed navbar height */
+  min-height: 100vh;
+  background-color: #121212; /* Dark background matching your navbar */
+  color: #e0e0e0; /* Light text color for contrast */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align at the top, allowing content to flow down */
+}
+
+.profile-container {
+  background-color: #1a1a1a; /* Slightly lighter dark background for the card */
+  border: 1px solid var(--theme-border); /* Uses theme border from navbar.css */
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.profile-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--theme-text-strong);
+  margin-bottom: 1rem;
+}
+
+.profile-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.profile-avatar-large {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, var(--theme-accent), var(--theme-accent-light)); /* Uses theme accents */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.1), 0 0 20px var(--theme-shadow-color-hover); /* Enhanced glow */
+  transition: all 0.3s ease;
+}
+
+/* Profile Details View */
+.profile-details-view {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column; /* Stack label and value */
+  gap: 0.25rem;
+  padding: 0.75rem 1rem;
+  background-color: #222222;
+  border: 1px solid #333333;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.detail-item:hover {
+  border-color: var(--theme-accent); /* Highlight on hover */
+  box-shadow: 0 0 5px var(--theme-shadow-color);
+}
+
+.detail-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--theme-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detail-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--theme-text-strong);
+}
+
+.edit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  background: linear-gradient(135deg, var(--theme-accent), var(--theme-accent-light)); /* Uses theme accents */
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 8px var(--theme-shadow-color); /* Uses theme shadow color */
+}
+
+.edit-btn:hover {
+  background: linear-gradient(135deg, var(--theme-accent-light), var(--theme-accent)); /* Slightly darker on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px var(--theme-shadow-color-hover); /* More prominent shadow on hover */
+}
+
+.edit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px var(--theme-shadow-color);
+}
+
+.edit-btn svg {
+  color: white;
+}
+
+/* Profile Details Form (Edit Mode) */
+.profile-details-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--theme-text-light);
+}
+
+.form-group input {
+  padding: 0.75rem 1rem;
+  background-color: #222222;
+  border: 1px solid #333333;
+  border-radius: 8px;
+  color: var(--theme-text-strong);
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--theme-accent); /* Uses theme accent */
+  box-shadow: 0 0 0 3px var(--theme-shadow-color); /* Uses theme shadow color */
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.cancel-btn,
+.save-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.cancel-btn {
+  background-color: #333333;
+  color: #d4d4d4;
+  border: 1px solid #4a4a4a;
+}
+
+.cancel-btn:hover {
+  background-color: #4a4a4a;
+  color: #ffffff;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, var(--theme-accent), var(--theme-accent-light)); /* Uses theme accents */
+  color: white;
+  border: none;
+  box-shadow: 0 4px 8px var(--theme-shadow-color); /* Uses theme shadow color */
+}
+
+.save-btn:hover {
+  background: linear-gradient(135deg, var(--theme-accent-light), var(--theme-accent)); /* Slightly darker on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px var(--theme-shadow-color-hover); /* More prominent shadow on hover */
+}
+
+.save-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px var(--theme-shadow-color);
+}
+
+.save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top: 4px solid var(--theme-accent); /* Uses theme accent */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  color: #ef4444; /* Red for errors */
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 70px 1rem 1rem;
+  }
+  .profile-container {
+    padding: 1.5rem;
+  }
+  .profile-title {
+    font-size: 1.75rem;
+  }
+  .profile-avatar-large {
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
+  }
+  .detail-label, .form-group label {
+    font-size: 0.8rem;
+  }
+  .detail-value, .form-group input {
+    font-size: 0.95rem;
+  }
+  .edit-btn, .cancel-btn, .save-btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 1rem;
+  }
+  .profile-title {
+    font-size: 1.5rem;
+  }
+  .profile-avatar-large {
+    width: 70px;
+    height: 70px;
+    font-size: 1.8rem;
+  }
+  .form-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .cancel-btn, .save-btn {
+    width: 100%;
+  }
+}

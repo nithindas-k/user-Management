@@ -1,0 +1,169 @@
+/* Dark Theme Professional Homepage Styling - Alternative Design */
+
+.home-page-wrapper {
+  padding-top: 80px; /* Space for fixed navbar (navbar height 64px + some margin) */
+  min-height: 100vh; /* Ensures the page takes at least full viewport height */
+  background-color: #121212; /* Even darker primary background for the page */
+  color: #e0e0e0; /* Light text color */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align content to the top */
+  padding-bottom: 40px; /* Padding at the bottom for content that extends */
+}
+
+.home-content-area {
+  max-width: 900px; /* Wider content area for better display */
+  width: 100%;
+  margin: 40px auto 0; /* Adjust margin for top spacing */
+  padding: 40px;
+  background-color: #1a1a1a; /* Dark background matching navbar */
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08); /* Deeper shadow */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-content-area.unauthorized {
+    padding: 60px 40px;
+    background-color: #1f1f1f;
+    border: 1px solid #2d2d2d;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.main-message {
+  font-size: 2.8rem; /* Larger, more impactful heading */
+  margin-bottom: 15px;
+  color: #f97316; /* Your accent orange color */
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-shadow: 0 0 15px rgba(249, 115, 22, 0.4); /* Stronger glow */
+}
+
+.sub-message {
+  font-size: 1.2rem;
+  color: #a3a3a3; /* Muted text color */
+  margin-bottom: 40px;
+  line-height: 1.5;
+}
+
+.loading-message {
+  font-size: 1.1rem;
+  color: #a3a3a3;
+  padding: 30px;
+  background-color: #262626;
+  border-radius: 8px;
+  margin-top: 30px;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+}
+
+/* User Details Grid */
+.user-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+  gap: 25px; /* Spacing between cards */
+  width: 100%;
+  margin-top: 20px;
+}
+
+.detail-card {
+  background-color: #262626; /* Slightly lighter dark background for cards */
+  border: 1px solid #404040; /* Border matching navbar elements */
+  border-radius: 10px;
+  padding: 25px;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-card:hover {
+  transform: translateY(-5px); /* Subtle lift on hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 0 2px #f97316; /* Highlight on hover */
+}
+
+.detail-label {
+  font-size: 0.95rem;
+  color: #a3a3a3; /* Muted label color */
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.detail-value {
+  font-size: 1.4rem; /* Larger value for prominence */
+  color: #f97316; /* Accent color for values */
+  font-weight: 500;
+  word-break: break-all; /* Break long IDs/emails */
+  line-height: 1.3;
+}
+
+/* Responsive Design for Home page */
+@media (max-width: 1024px) {
+  .home-content-area {
+    margin: 30px auto 0;
+    padding: 30px;
+    max-width: 800px;
+  }
+  .main-message {
+    font-size: 2.4rem;
+  }
+  .sub-message {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-page-wrapper {
+    padding-top: 70px; /* Adjust for smaller navbar height on mobile */
+  }
+  .home-content-area {
+    padding: 25px;
+    margin: 20px 1rem 0; /* Add horizontal margin */
+  }
+  .main-message {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  .sub-message {
+    font-size: 1rem;
+    margin-bottom: 30px;
+  }
+  .user-details-grid {
+    grid-template-columns: 1fr; /* Stack cards vertically on smaller screens */
+    gap: 20px;
+  }
+  .detail-card {
+    padding: 20px;
+  }
+  .detail-value {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page-wrapper {
+    padding-top: 60px; /* Further adjust for mobile navbar */
+  }
+  .home-content-area {
+    padding: 20px;
+    margin: 15px 0.75rem 0; /* More consistent horizontal margin */
+  }
+  .main-message {
+    font-size: 1.7rem;
+  }
+  .sub-message {
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+  }
+  .detail-label {
+    font-size: 0.85rem;
+  }
+  .detail-value {
+    font-size: 1.1rem;
+  }
+}
