@@ -143,12 +143,3 @@ export const createUser = async (req, res) => {
   }
 };
 
-export const logoutUser = (req, res) => {
-  res.clearCookie('token', {
-    httpOnly: true,
-    sameSite: 'Lax',
-    secure: false,
-  });
-
-  return res.status(200).json({ message: 'Logout successful' });
-};

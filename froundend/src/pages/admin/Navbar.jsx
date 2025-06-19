@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import { clearUser } from "../../redux/slices/userSlice";
-import axios from "axios";
-import { logoutUser } from "../../services/userServices";
+import axiosInstance from "../../api/axiosInstance";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -25,7 +24,7 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = async () => {
-    await logoutUser();
+    axiosInstance.get("logout");
     dispatch(clearUser());
     navigate("/admin");
     setShowUserMenu(false);
