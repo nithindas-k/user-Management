@@ -35,7 +35,6 @@ export const register = async (req, res) => {
     };
 
     const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-    const refreshToken = jwt.sign(payload, process.env.JWT_SECRET_2, { expiresIn: '7d' });
 
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
@@ -44,13 +43,6 @@ export const register = async (req, res) => {
       sameSite: 'Lax',
     });
 
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      sameSite: 'Lax',
-      path: '/api/refresh',
-    });
 
     res.status(201).json({
       message: 'Registration successful',
