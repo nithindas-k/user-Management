@@ -1,4 +1,14 @@
 import User from '../Model/user.js';
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+
+
+dotenv.config();
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
+
+
 export const logout = (req, res) => {
     res.clearCookie('accessToken');
     res.status(200).json({ message: 'Logged out' });
@@ -7,7 +17,8 @@ export const verifyToken = async (req, res) => {
     try {
         const token = req.cookies.accessToken;
 
-
+       console.log(token);
+       
         if (!token) {
             return res.status(401).json({ message: 'No token provided' });
         }
