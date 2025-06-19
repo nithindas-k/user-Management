@@ -1,9 +1,12 @@
 import User from '../Model/user.js';
-import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
+import dotenv from 'dotenv';
 
 dotenv.config();
+
+const imageURL = `http://localhost:${process.env.PORT}`
+
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -17,8 +20,6 @@ export const verifyToken = async (req, res) => {
     try {
         const token = req.cookies.accessToken;
 
-       console.log(token);
-       
         if (!token) {
             return res.status(401).json({ message: 'No token provided' });
         }

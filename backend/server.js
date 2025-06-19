@@ -31,7 +31,7 @@ app.get("/api/logout", logout)
 app.use('/api/admin', adminRoutes);
 app.use('/api', userRoutes);
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3005;
 app.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
 });
