@@ -41,7 +41,7 @@ export const login = async (req, res) => {
 
     res.status(200).json({
       message: "Admin login successful",
-      token1,
+      token,
       user: {
         _id: user._id,
         email: user.email,
