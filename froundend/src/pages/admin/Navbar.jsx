@@ -11,11 +11,10 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  
 
-  const { isLoggedIn, id, name, role,email } = useSelector((state) => state.user);
-
-  
+  const { isLoggedIn, id, name, role, email } = useSelector(
+    (state) => state.user
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,8 +24,8 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleLogout =async () => {
-    await logoutUser()
+  const handleLogout = async () => {
+    await logoutUser();
     dispatch(clearUser());
     navigate("/admin");
     setShowUserMenu(false);
@@ -47,14 +46,14 @@ const Navbar = () => {
       : "U";
   };
 
-  const isAdminUser = role =="admin"?true:false
+  const isAdminUser = role == "admin" ? true : false;
 
   return (
     <nav className={`navbar admin-theme ${isScrolled ? "scrolled" : ""}  `}>
       <div className="navbar-container">
         <div className="nav-brand">
           <div className="company-logo">
-            <svg  width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <rect
                 x="3"
                 y="3"
@@ -103,17 +102,12 @@ const Navbar = () => {
             <div className="user-section">
               <div className="user-info">
                 <span className="user-name">{name}</span>
-                <span className="user-role">
-                  {isAdminUser ? "Admin" : "User"}
-                </span>
               </div>
 
               <div className="user-menu-wrapper">
                 <button className="user-menu-trigger" onClick={toggleUserMenu}>
                   <div className="user-avatar">
-                    <span className="avatar-text">
-                      {getUserInitials(name)}
-                    </span>
+                    <span className="avatar-text">{getUserInitials(name)}</span>
                   </div>
                   <svg
                     className={`chevron-icon ${showUserMenu ? "rotated" : ""}`}
@@ -141,9 +135,7 @@ const Navbar = () => {
                         </div>
                         <div className="dropdown-details">
                           <span className="dropdown-name">{name}</span>
-                          <span className="dropdown-email">
-                            {email}
-                          </span>
+                          <span className="dropdown-email">{email}</span>
                         </div>
                       </div>
                     </div>

@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
+const imageURL = `http://localhost:${process.env.PORT}`
 
 export const register = async (req, res) => {
   try {
@@ -91,7 +92,6 @@ export const login = async (req, res) => {
     };
 
     const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-    const refreshToken = jwt.sign(payload, process.env.JWT_SECRET_2, { expiresIn: '7d' });
 
     res.cookie('accessToken', accessToken, {
       httpOnly: true,
@@ -100,20 +100,15 @@ export const login = async (req, res) => {
       sameSite: 'Lax',
     });
 
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      sameSite: 'Lax',
-      path: '/api/refresh',
-    });
 
+    const avtarURL = user?.avatar ? imageURL + user.avatar : null;
     return res.status(200).json({
       message: 'Login successful',
       user: {
         _id: user._id,
         name: user.name,
         email: user.email,
+        avatar: avtarURL,
         isAdmin: user.isAdmin,
         createdAt: user.createdAt,
       },
@@ -140,6 +135,7 @@ export const verifyToken = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+    const avtarURL = user?.avatar ? imageURL + user.avatar : null;
 
     const userWithRole = {
       id: user._id,
@@ -148,6 +144,7 @@ export const verifyToken = async (req, res) => {
       isAdmin: user.isAdmin,
       role: user.isAdmin ? 'admin' : 'user',
       createdAt: user.createdAt,
+      avatar: avtarURL
     };
 
     return res.status(200).json({
@@ -182,104 +179,3 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
-export const updateUserProfile = async (req, res) => {
-  try {
-    console.log("BODY:", req.body);
-    console.log("FILE:", req.file);
-    console.log("Authenticated user:", req.user);
-
-    const userId = req.params.id;
-    
-    // Check if user is updating their own profile or is admin
-    // Note: req.user contains decoded JWT payload (id, role, etc.)
-    if (req.user.id !== userId && req.user.role !== 'admin') {
-      return res.status(403).json({ 
-        message: "Access denied. You can only update your own profile." 
-      });
-    }
-
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found." });
-    }
-
-    const { name, email } = req.body;
-
-    // Validate input
-    if (!name || !name.trim()) {
-      return res.status(400).json({ message: "Name is required." });
-    }
-
-    if (!email || !email.trim()) {
-      return res.status(400).json({ message: "Email is required." });
-    }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ message: "Please enter a valid email address." });
-    }
-
-    // Check if email is already taken by another user
-    if (email !== user.email) {
-      const existingUser = await User.findOne({ email, _id: { $ne: userId } });
-      if (existingUser) {
-        return res.status(400).json({ message: "Email is already taken." });
-      }
-    }
-
-    // Update user fields
-    user.name = name.trim();
-    user.email = email.trim();
-
-    // Handle avatar upload
-    if (req.file && req.file.path) {
-      // If user had previous avatar on Cloudinary, you might want to delete it
-      // This is optional but good for cleanup
-      if (user.avatar && user.avatar.includes('cloudinary')) {
-        try {
-          const publicId = user.avatar.split('/').pop().split('.')[0];
-          await cloudinary.uploader.destroy(`user-profiles/${publicId}`);
-        } catch (deleteError) {
-          console.log('Error deleting old avatar:', deleteError);
-          // Continue with update even if old image deletion fails
-        }
-      }
-      
-      user.avatar = req.file.path;
-    }
-
-    const updatedUser = await user.save();
-
-    res.status(200).json({
-      message: "User updated successfully.",
-      user: {
-        id: updatedUser._id,
-        name: updatedUser.name,
-        email: updatedUser.email,
-        avatar: updatedUser.avatar,
-        role: updatedUser.role
-      }
-    });
-  } catch (error) {
-    console.error("Error updating user:", error);
-    
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ 
-        message: "Validation error", 
-        details: error.message 
-      });
-    }
-    
-    if (error.code === 11000) {
-      return res.status(400).json({ 
-        message: "Email is already taken." 
-      });
-    }
-    
-    res.status(500).json({ 
-      message: "Server error while updating user.",
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
-    });
-  }
-};

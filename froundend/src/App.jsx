@@ -21,7 +21,6 @@ import axiosInstance from "./api/axiosInstance";
 
 const App = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -36,13 +35,14 @@ const App = () => {
           role: user.isAdmin ? "admin" : "user",
           token: data.token,
           isAdmin: user.isAdmin,
+          avatar: user.avatar,
         };
 
         dispatch(setUser(userData));
       } catch (error) {
         dispatch(clearUser());
-        toast.error("Session expired. Please log in again.");
-        navigate("/admin/login");
+        // toast.error("Session expired. Please log in again.");
+        // navigate("/admin/login");
       }
     };
 

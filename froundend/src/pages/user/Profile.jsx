@@ -4,15 +4,13 @@ import { toast } from "react-toastify";
 import { setUser } from "../../redux/slices/userSlice";
 import { updateUserProfile } from "../../services/userServices";
 import "./profile.css";
-
-const getUserInitials = (name) => {
-  return name?.split(" ").map((n) => n[0]).join("").toUpperCase();
-};
+import Avatar from "../../components/Avatar/Avatar";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn, id, name, email, role, token } = useSelector((state) => state.user);
-
+  const { isLoggedIn, id, name, email, role, token, avatar } = useSelector(
+    (state) => state.user
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -61,8 +59,7 @@ const Profile = () => {
     }
 
     try {
-      const response = await updateUserProfile(id, data, token);
-      console.log("Update response:", response);
+      const response = await updateUserProfile(data);
 
       if (response.message === "User updated successfully.") {
         dispatch(
@@ -74,6 +71,7 @@ const Profile = () => {
             token,
             isAdmin: role,
             isLoggedIn: true,
+            avatar: response.avatar,
           })
         );
         setIsEditing(false);
@@ -127,7 +125,7 @@ const Profile = () => {
         <h2 className="profile-title">User Profile</h2>
         <div className="profile-card">
           <div className="profile-avatar-large">
-            <span className="avatar-text-large">{getUserInitials(name)}</span>
+            <Avatar name={name} avatar={avatar} />
           </div>
 
           {!isEditing ? (

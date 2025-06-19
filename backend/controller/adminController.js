@@ -3,11 +3,10 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { ROLES } from '../utils/constants.js';
-import path from 'path';
 
 dotenv.config();
+const imageURL = `http://localhost:${process.env.PORT}`
 
-const JWT_SECRET = process.env.JWT_SECRET;
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -27,29 +26,19 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     const payLoad = { id: user._id, isAdmin: user.isAdmin, name: user.name, email: user.email, role: ROLES.ADMIN };
-    const token1 = jwt.sign(
+    const token = jwt.sign(
       payLoad,
       process.env.JWT_SECRET || "yoursecretkey",
       { expiresIn: "7d" }
     );
-    const token2 = jwt.sign(
-      payLoad,
-      process.env.JWT_SECRET_2 || "yoursecretkey2",
-      { expiresIn: "7d" }
-    );
-    res.cookie('accessToken', token1, {
+
+    res.cookie('accessToken', token, {
       httpOnly: true,
       secure: false,
       maxAge: 3600000,
       sameSite: 'Lax', // Or 'None' + secure: true for cross-origin
     });
-    res.cookie('refreshToken', token2, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 3600000,
-      sameSite: 'Lax', // Or 'None' + secure: true for cross-origin
-      path:'/api/refresh'
-    });
+
     res.status(200).json({
       message: "Admin login successful",
       token1,
@@ -87,7 +76,8 @@ export const deleteUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const userId = req.params.id;
+
+    const userId = req.user.isAdmin ? req.params.id : req.user.id;
     const user = await User.findById(userId);
 
     if (!user) {
@@ -96,18 +86,19 @@ export const updateUser = async (req, res) => {
 
     const { name, email } = req.body;
 
+
     user.name = name || user.name;
     user.email = email || user.email;
-
-    if (req.file && req.file.path) {
-      user.avatar = req.file.path; // Cloudinary URL
+    if (req.file) {
+      user.avatar = `/uploads/${req.file.filename}`;
     }
 
     await user.save();
+    const avtarURL = user?.avatar ? imageURL + user.avatar : null;
 
     res.status(200).json({
       message: "User updated successfully.",
-      avatar: user.avatar,
+      avatar: avtarURL,
     });
   } catch (error) {
     console.error("Error updating user:", error);

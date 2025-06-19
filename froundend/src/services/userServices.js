@@ -35,15 +35,15 @@ export const updateUser = async (userID, data) => {
   const res = await axiosInstance.put(API_ROUTES.UPDATE_USER(userID), data);
   return res.data;
 };
-export const updateUserProfile = async (id, data) => {
+export const updateUserProfile = async (data) => {
   // Since we're using cookies, no need to manually set authorization header
   const config = {
     headers: {
       'Content-Type': 'multipart/form-data',
     }
   };
-  
-  const res = await axiosInstance.put(API_ROUTES.PROFILE_UPDATE(id), data, config);
+
+  const res = await axiosInstance.put(API_ROUTES.PROFILE_UPDATE, data, config);
   return res.data;
 };
 

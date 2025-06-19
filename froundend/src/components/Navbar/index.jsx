@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import { clearUser } from "../../redux/slices/userSlice";
+import axiosInstance from "../../api/axiosInstance";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    axiosInstance.get("logout");
     dispatch(clearUser());
     navigate("/");
     setShowUserMenu(false);
@@ -120,7 +122,6 @@ const Navbar = () => {
             <div className="user-section">
               <div className="user-info">
                 <span className="user-name">{name}</span>
-                <span className="user-role">{role}</span>
               </div>
 
               <div className="user-menu-wrapper">
