@@ -4,13 +4,13 @@ import {
     deleteUser,
     updateUser,
     createUser,
+    getAllUsers
 } from "../controller/adminController.js";
 import {
     decodeTokenMiddleware,
     authorizeRoles,
 } from "../middleware/authMiddleware.js";
 
-import { getAllUsers } from "../controller/userController.js";
 import { ROLES } from "../utils/constants.js";
 
 const router = Router();
