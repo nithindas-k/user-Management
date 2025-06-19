@@ -2,50 +2,47 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { setUser } from "../../redux/slices/userSlice";
+import { updateUserProfile } from "../../services/userServices";
 import "./profile.css";
 
-import { updateUserProfile } from "../../services/userServices";
-
 const getUserInitials = (name) => {
-  return name
-    ?.split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase();
+  return name?.split(" ").map((n) => n[0]).join("").toUpperCase();
 };
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn, id, name, email, role, token } = useSelector(
-    (state) => state.user
-  );
+  const { isLoggedIn, id, name, email, role, token } = useSelector((state) => state.user);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    avatar: null,
+  });
 
   useEffect(() => {
     if (isLoggedIn && name && email) {
-      setFormData({ name, email });
+      setFormData({ name, email, avatar: null });
     }
     setLoading(false);
   }, [isLoggedIn, name, email]);
-    
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-
     setFormData({ ...formData, [name]: files ? files[0] : value });
   };
 
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
-    setFormData({ name, email });
+    setFormData({ name, email, avatar: null });
   };
 
   const handleSave = async (e) => {
     e.preventDefault();
     setError(null);
+
     if (!formData.name.trim() || !formData.email.trim()) {
       toast.error("Name and Email cannot be empty.");
       return;
@@ -56,25 +53,29 @@ const Profile = () => {
       return;
     }
 
-    const data = new FormData()
-    data.append("name",formData.name,"email",formData.email,"avathar",formData.Profile)
+    const data = new FormData();
+    data.append("name", formData.name);
+    data.append("email", formData.email);
+    if (formData.avatar) {
+      data.append("avatar", formData.avatar);
+    }
 
     try {
-      const data = await updateUserProfile(id, formData, token);
+      const response = await updateUserProfile(id, data, token);
+      console.log("Update response:", response);
 
-      if (data.message === "User updated successfully.") {
+      if (response.message === "User updated successfully.") {
         dispatch(
           setUser({
             id,
             name: formData.name,
             email: formData.email,
             role,
-            token: token,
+            token,
             isAdmin: role,
             isLoggedIn: true,
           })
         );
-
         setIsEditing(false);
         toast.success("Profile updated successfully!");
       } else {
@@ -83,7 +84,7 @@ const Profile = () => {
     } catch (err) {
       console.error("Failed to update user data:", err);
       setError("Failed to update profile. Please try again.");
-      toast.error(err.response?.data?.message || "Failed to update profile.");
+      toast.error(err.message || "Failed to update profile.");
     }
   };
 
@@ -170,12 +171,15 @@ const Profile = () => {
                   onChange={handleChange}
                   required
                 />
-
+              </div>
+              <div className="form-group">
+                <label htmlFor="avatar">Upload Avatar:</label>
                 <input
                   type="file"
-                  name="profile"
-                  onChange={handleChange}
+                  id="avatar"
+                  name="avatar"
                   accept="image/*"
+                  onChange={handleChange}
                 />
               </div>
 

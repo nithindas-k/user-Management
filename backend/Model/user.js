@@ -21,10 +21,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     minLength: 6
   },
-    profileImage: {
-    type: String,
-    default: null // Store Cloudinary URL
-  }
+ avatar: {
+  type: String,
+  default: "", 
+}
+
 
 
 }, { timestamps: true });

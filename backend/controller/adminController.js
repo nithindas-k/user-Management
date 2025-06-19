@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { ROLES } from '../utils/constants.js';
+import path from 'path';
 
 dotenv.config();
 
@@ -26,15 +27,32 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     const payLoad = { id: user._id, isAdmin: user.isAdmin, name: user.name, email: user.email, role: ROLES.ADMIN };
-    const token = jwt.sign(
+    const token1 = jwt.sign(
       payLoad,
       process.env.JWT_SECRET || "yoursecretkey",
       { expiresIn: "7d" }
     );
-
+    const token2 = jwt.sign(
+      payLoad,
+      process.env.JWT_SECRET_2 || "yoursecretkey2",
+      { expiresIn: "7d" }
+    );
+    res.cookie('accessToken', token1, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 3600000,
+      sameSite: 'Lax', // Or 'None' + secure: true for cross-origin
+    });
+    res.cookie('refreshToken', token2, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 3600000,
+      sameSite: 'Lax', // Or 'None' + secure: true for cross-origin
+      path:'/api/refresh'
+    });
     res.status(200).json({
       message: "Admin login successful",
-      token,
+      token1,
       user: {
         _id: user._id,
         email: user.email,
@@ -76,25 +94,27 @@ export const updateUser = async (req, res) => {
       return res.status(404).json({ message: "User not found." });
     }
 
-    const { name, email, isAdmin, password } = req.body;
+    const { name, email } = req.body;
 
     user.name = name || user.name;
     user.email = email || user.email;
-    user.isAdmin = typeof isAdmin === "boolean" ? isAdmin : user.isAdmin;
 
-    if (password) {
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(password, salt);
+    if (req.file && req.file.path) {
+      user.avatar = req.file.path; // Cloudinary URL
     }
 
     await user.save();
 
-    res.status(200).json({ message: "User updated successfully." });
+    res.status(200).json({
+      message: "User updated successfully.",
+      avatar: user.avatar,
+    });
   } catch (error) {
     console.error("Error updating user:", error);
     res.status(500).json({ message: "Server error while updating user." });
   }
 };
+
 
 export const createUser = async (req, res) => {
   try {
@@ -130,4 +150,14 @@ export const createUser = async (req, res) => {
     console.error("Error creating user:", error);
     res.status(500).json({ message: "Server error while creating user." });
   }
+};
+
+export const logoutUser = (req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    sameSite: 'Lax',
+    secure: false,
+  });
+
+  return res.status(200).json({ message: 'Logout successful' });
 };

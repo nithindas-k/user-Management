@@ -6,8 +6,8 @@ dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
 
 export const decodeTokenMiddleware = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+ 
+  const token = req.cookies.accessToken;
 
   if (!token) {
     return res.status(401).json({ message: 'No token provided. Access denied.' });

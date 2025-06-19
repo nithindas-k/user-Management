@@ -25,18 +25,16 @@ const AdminLogin = () => {
 
     try {
       const { token, user } = await adminLogin(formData);
-
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
-      toast.success("Admin login successful!");
       
+      toast.success("Admin login successful!");
+
       if (user.isAdmin) {
         dispatch(
           setUser({
             id: user._id,
             name: user.name,
             email: user.email,
-            role:  "admin",
+            role: "admin",
             token: token,
           })
         );
@@ -57,7 +55,6 @@ const AdminLogin = () => {
 
   return (
     <div className="admin-login-container dark-theme">
-      
       <div className="admin-login-card dark-card">
         <h2 className="admin-login-title dark-title">Admin Login</h2>
         <form onSubmit={handleSubmit} className="admin-login-form">

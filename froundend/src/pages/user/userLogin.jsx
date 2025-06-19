@@ -61,37 +61,33 @@ const UserLogin = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!validateForm()) return;
+  if (!validateForm()) return;
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      const data = await loginUser(formData);
-      localStorage.setItem("token", data.token);
+  try {
+    const data = await loginUser(formData);
+    const user = data.user;
 
-      const user = data.user;
-      dispatch(
-        setUser({
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.isAdmin ? "admin" : "user",
-          token: data.token,
-        })
-      );
+    dispatch(setUser({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.isAdmin ? "admin" : "user",
+    }));
 
-      toast.success("Login successful!");
-      navigate("/");
-    } catch (err) {
-      console.error("Login error:", err);
-      toast.error(err.response?.data?.message || "Login failed");
-      dispatch(clearUser());
-    } finally {
-      setLoading(false);
-    }
-  };
+    toast.success("Login successful!");
+    navigate("/");
+  } catch (err) {
+    console.error("Login error:", err);
+    toast.error(err.response?.data?.message || "Login failed");
+    dispatch(clearUser());
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="login-container">

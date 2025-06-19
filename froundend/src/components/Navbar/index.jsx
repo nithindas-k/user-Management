@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import { clearUser } from "../../redux/slices/userSlice";
-import axios from "axios";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -11,7 +10,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
-  const { isLoggedIn, role, name ,email} = useSelector((state) => state.user);
+  const { isLoggedIn, role, name, email } = useSelector((state) => state.user);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,7 +87,7 @@ const Navbar = () => {
               </svg>
               Dashboard
             </Link>
-            {role == 'user' && isLoggedIn && (
+            {role == "user" && isLoggedIn && (
               <Link to="/profile" className="nav-link">
                 <svg
                   width="16"
@@ -121,17 +120,13 @@ const Navbar = () => {
             <div className="user-section">
               <div className="user-info">
                 <span className="user-name">{name}</span>
-                <span className="user-role">
-                  {role ? "Admin" : "User"}
-                </span>
+                <span className="user-role">{role}</span>
               </div>
 
               <div className="user-menu-wrapper">
                 <button className="user-menu-trigger" onClick={toggleUserMenu}>
                   <div className="user-avatar">
-                    <span className="avatar-text">
-                      {getUserInitials(name)}
-                    </span>
+                    <span className="avatar-text">{getUserInitials(name)}</span>
                   </div>
                   <svg
                     className={`chevron-icon ${showUserMenu ? "rotated" : ""}`}
@@ -160,9 +155,7 @@ const Navbar = () => {
                         </div>
                         <div className="dropdown-details">
                           <span className="dropdown-name">{name}</span>
-                          <span className="dropdown-email">
-                            {email}
-                          </span>
+                          <span className="dropdown-email">{email}</span>
                         </div>
                       </div>
                     </div>

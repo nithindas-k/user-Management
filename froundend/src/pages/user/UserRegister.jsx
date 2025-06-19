@@ -79,39 +79,34 @@ const UserRegister = () => {
     return true;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!validateForm()) return;
+  if (!validateForm()) return;
 
-    dispatch(registerStart());
+  dispatch(registerStart());
 
-    try {
-      const user = await registerUser(formData);
+  try {
+    const data = await registerUser(formData);
+    const user = data.user;
 
-      localStorage.setItem("token", user.token);
+    dispatch(registerSuccess(user));
+    dispatch(setUser({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.isAdmin ? "admin" : "user",
+    }));
 
-      dispatch(registerSuccess(user));
-      dispatch(
-        setUser({
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.isAdmin ? "admin" : "user",
-          token: user.token,
-        })
-      );
+    toast.success("Registration successful!");
+    navigate("/");
+  } catch (err) {
+    console.error(err);
+    toast.error(err.response?.data?.message || "Registration failed");
+    dispatch(registerFailure(err.response?.data?.message || "Registration failed"));
+  }
+};
 
-      toast.success("Registration successful!");
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-      toast.error(err.response?.data?.message || "Registration failed");
-      dispatch(
-        registerFailure(err.response?.data?.message || "Registration failed")
-      );
-    }
-  };
 
   return (
     <div className="register-container">

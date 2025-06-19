@@ -38,6 +38,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     if (isLoggedIn && role === "admin") {
       fetchAllUsers();
+      
     } else {
       setAllUsers([]);
       setShowUserForm(false);

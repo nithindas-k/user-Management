@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import { clearUser } from "../../redux/slices/userSlice";
 import axios from "axios";
+import { logoutUser } from "../../services/userServices";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -24,8 +25,8 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
+  const handleLogout =async () => {
+    await logoutUser()
     dispatch(clearUser());
     navigate("/admin");
     setShowUserMenu(false);

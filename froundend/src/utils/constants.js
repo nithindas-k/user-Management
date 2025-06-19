@@ -6,6 +6,7 @@ export const API_ROUTES = {
     DELETE_USER: (userID) => `/admin/user/${userID}`,
     CREATE_USER: "/admin/user",
     UPDATE_USER: (userID) => `/admin/user/${userID}`,
-    REGISTER: '/register'
+    REGISTER: '/register',
+    LOGOUT:'/logout'
 
 }
