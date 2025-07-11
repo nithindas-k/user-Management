@@ -36,7 +36,6 @@ export const updateUser = async (userID, data) => {
   return res.data;
 };
 export const updateUserProfile = async (data) => {
-  // Since we're using cookies, no need to manually set authorization header
   const config = {
     headers: {
       'Content-Type': 'multipart/form-data',
